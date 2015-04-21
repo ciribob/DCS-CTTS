@@ -2,10 +2,10 @@
 Complete Troops Transport Script (CTTS) including logistics v1.04
 Based on original HueyDrop script idea by Deck and modified by Angel(Geloxo)
 
-Modified again by Ciribob 11.03.2015 
+Modified again by Ciribob 21.04.2015 
 
-BUG FIX:
-
+Change Log
+- Added option for RPG troop for coalition
 - Fixed nil leader bug in FindNearestGroup & FindNearestLogGroup
 	- GetUnits returned an empty table so indexing the first unit crashed the script
 		- Rewritten for safer logic against insane ED bugs
@@ -292,9 +292,11 @@ minDistGround = 500 -- min distance needed to trigger auto unload for AI ground 
 defCargoNum = 10 	-- default number of troops to load on a transport
 defCountSpawn = 10	-- default number of troops used on a standalone spawned group
 
+spawnRPGWithCoalition = true --spawns a friendly RPG unit with Coalition forces
+
 logisticItemModel = "FARP Tent" -- model used to spawn a logistic item
 
-cargoSpawn = true -- adds special spawn cargo crate option to the menu
+cargoSpawn = false -- adds special spawn cargo crate option to the menu
 cargoCrateMassKG = 450 -- mass of the cargo crate in Kilograms
 
 radioTime = 30	-- time duration for AM/FM messages
@@ -581,6 +583,9 @@ function DropoffGroupDirect(count, radius, xCenter, yCenter, xDest, yDest, group
 				
 		if groupside == 2 then 
 			unitType = "Soldier M4"
+            if i <= 4 and spawnRPGWithCoalition then
+                unitType = "Paratrooper RPG-16"
+            end
 			if i <= 2 then
 				unitType = "Soldier M249"
 			end
